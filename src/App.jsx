@@ -172,7 +172,12 @@ function App() {
                     onBlur={() => {
                       if (!amount.trim()) toast.warning('Input is empty')
                     }}
-                    onChange={(event) => setAmount(event.target.value)}
+                    onChange={(event) => {
+                      const raw = event.target.value
+                      // Allow digits and at most one decimal point
+                      const cleaned = raw.replace(/[^\d.]/g, '').replace(/^(\d*\.?\d*).*$/, '$1')
+                      setAmount(cleaned)
+                    }}
                     placeholder="0.00"
                     step="0.01"
                     type="text"
