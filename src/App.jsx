@@ -69,11 +69,35 @@ function App() {
     }
   }, [activeError, validationError])
 
+  function handleSaveFavorite() {
+    const save = new Promise((resolve) => {
+      saveCurrentFavorite()
+      setTimeout(resolve, 600)
+    })
+    toast.promise(save, {
+      loading: 'Saving pair...',
+      success: 'Pair saved!',
+      error: 'Could not save pair.',
+    })
+  }
+
+  function handleRemoveFavorite(id) {
+    const remove = new Promise((resolve) => {
+      removeFavoritePairAction(id)
+      setTimeout(resolve, 600)
+    })
+    toast.promise(remove, {
+      loading: 'Removing pair...',
+      success: 'Pair removed.',
+      error: 'Could not remove pair.',
+    })
+  }
+
   return (
     <div className="app-shell">
       <aside className="dashboard-sidebar">
         <div className="brand-lockup">
-          <div className="brand-mark">G</div>
+          <img alt="Convertix logo" className="brand-mark" src="/goo.png" />
           <div>
             <strong>Convertix</strong>
           </div>
@@ -243,7 +267,7 @@ function App() {
                 <Button
                   className="hero-action"
                   disabled={Boolean(validationError) || isCurrentPairSaved}
-                  onClick={saveCurrentFavorite}
+                  onClick={handleSaveFavorite}
                   type="button"
                   variant="default"
                 >
@@ -407,7 +431,7 @@ function App() {
             <CardHeader className="favorite-shell pb-0">
               <div>
                 <CardTitle>Favorite pairs</CardTitle>
-                <p>Load or remove saved routing pairs from local storage.</p>
+                <p>View and remove saved routing pairs from local storage.</p>
               </div>
             </CardHeader>
 
@@ -439,7 +463,7 @@ function App() {
                       <Button
                         aria-label={`Remove ${pair.from}/${pair.to}`}
                         className="favorite-remove"
-                        onClick={() => removeFavoritePairAction(pair.id)}
+                        onClick={() => handleRemoveFavorite(pair.id)}
                         type="button"
                         variant="ghost"
                         size="icon-sm"

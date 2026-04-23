@@ -96,14 +96,10 @@ button {
 }
 
 .brand-mark {
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: linear-gradient(180deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
-  color: #fff;
-  font-weight: 700;
+  display: block;
+  width: auto;
+  height: 1.15rem;
+  object-fit: contain;
 }
 
 .brand-lockup strong {
@@ -141,9 +137,9 @@ button {
 }
 
 .sidebar-link.is-active {
-  color: var(--color-sidebar-active);
-  background: var(--color-sidebar-active-bg);
-  border-left-color: var(--color-sidebar-accent);
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
+  border-left-color: var(--color-accent);
 }
 
 .sidebar-footnote {
