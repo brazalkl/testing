@@ -8,6 +8,17 @@ import {
 } from 'lucide-react'
 import { toast } from 'sonner'
 import './App.css'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -454,22 +465,44 @@ function App() {
                             {pair.from === fromCurrency && pair.to === toCurrency
                               ? primaryConversion
                                 ? formatCurrencyAmount(primaryConversion.rawAmount, toCurrency)
-                                : 'Live'
+                                : '—'
                               : 'Load pair'}
                           </strong>
                         </div>
                       </Button>
 
-                      <Button
-                        aria-label={`Remove ${pair.from}/${pair.to}`}
-                        className="favorite-remove"
-                        onClick={() => handleRemoveFavorite(pair.id)}
-                        type="button"
-                        variant="ghost"
-                        size="icon-sm"
-                      >
-                        <Trash2 size={14} />
-                      </Button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button
+                            aria-label={`Remove ${pair.from}/${pair.to}`}
+                            className="favorite-remove"
+                            type="button"
+                            variant="ghost"
+                            size="icon-sm"
+                          >
+                            <Trash2 size={14} />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent className="confirm-dialog">
+                          <AlertDialogHeader className="confirm-dialog-header">
+                            <AlertDialogTitle className="confirm-dialog-title">Delete favorite pair?</AlertDialogTitle>
+                            <AlertDialogDescription className="confirm-dialog-desc">
+                              Are you sure you want to delete{' '}
+                              <strong>{pair.from}/{pair.to}</strong>? This
+                              cannot be undone.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter className="confirm-dialog-footer">
+                            <AlertDialogCancel className="confirm-dialog-cancel">Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              className="confirm-dialog-delete"
+                              onClick={() => handleRemoveFavorite(pair.id)}
+                            >
+                              Delete
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </div>
                   ))}
                 </div>
