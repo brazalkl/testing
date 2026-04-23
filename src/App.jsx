@@ -134,6 +134,9 @@ function App() {
                     className="amount-field"
                     inputMode="decimal"
                     min="0"
+                    onBlur={() => {
+                      if (!amount.trim()) toast.warning('Input is empty')
+                    }}
                     onChange={(event) => setAmount(event.target.value)}
                     placeholder="0.00"
                     step="0.01"
@@ -219,11 +222,7 @@ function App() {
                 </section>
               </div>
 
-              {validationError === 'Enter an amount.' ? (
-                <div className="inline-validation-card">
-                  Input is empty
-                </div>
-              ) : null}
+
 
               <div className="conversion-footer">
                 <div className="rate-tile">
